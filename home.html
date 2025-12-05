@@ -53,10 +53,18 @@
         </div>
 
     <script>
-        function logout() {
-            window.location.href = "index.html";
-        }
+    // പേജ് ലോഡ് ചെയ്യുമ്പോൾ തന്നെ പരിശോധിക്കുന്നു
+    if (sessionStorage.getItem("loggedin") !== "true") {
+        alert("ദയവായി ലോഗിൻ ചെയ്യുക!");
+        window.location.href = "index.html"; // ലോഗിൻ ചെയ്തില്ലെങ്കിൽ തിരിച്ചയക്കും
+    }
+
+    function logout() {
+        sessionStorage.removeItem("loggedin"); // ലോഗൗട്ട് ചെയ്യുമ്പോൾ താക്കോൽ കളയുന്നു
+        window.location.href = "index.html";
+    }
     </script>
+    
 
 </body>
 </html>
