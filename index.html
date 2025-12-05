@@ -33,7 +33,7 @@
             margin: 10px 0;
             border: 1px solid #ddd;
             border-radius: 6px;
-            box-sizing: border-box; /* Fixes padding issues */
+            box-sizing: border-box;
             transition: 0.3s;
         }
         input:focus {
@@ -85,9 +85,9 @@
         <h2>Welcome Back</h2>
         <input type="text" id="username" placeholder="Username">
         <input type="password" id="password" placeholder="Password">
-        
+
         <button onclick="checkLogin()">Login</button>
-        
+
         <p id="error-msg" class="error-msg">Incorrect username or password!</p>
 
         <hr>
@@ -108,12 +108,10 @@
             } else {
                 document.getElementById("error-msg").style.display = "block";
             }
-        }
+        } // ഈ ബ്രാക്കറ്റ് ആണ് വിട്ടുപോയത്. ഇവിടെ checkLogin അവസാനിക്കുന്നു.
 
-            function openSignup() {
-    window.location.href = "signup.html"; // പുതിയ പേജിലേക്ക് പോകും
-}
-
+        function openSignup() {
+            window.location.href = "signup.html"; // പുതിയ പേജിലേക്ക് പോകും
         }
     </script>
 
