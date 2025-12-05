@@ -2,12 +2,15 @@
 <html>
 <head>
     <title>Login Page</title>
+    <link rel="icon" type="image/png" href="icon.png">
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
-        .login-box { width: 300px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px; box-shadow: 0px 0px 10px #ccc; }
-        input { width: 90%; padding: 10px; margin: 10px 0; }
-        button { width: 100%; padding: 10px; background-color: blue; color: white; border: none; cursor: pointer; }
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; background-color: #f0f2f5; }
+        .login-box { width: 300px; margin: auto; padding: 20px; background: white; border-radius: 10px; box-shadow: 0px 4px 10px rgba(0,0,0,0.1); }
+        input { width: 90%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; }
+        button { width: 100%; padding: 10px; background-color: blue; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
         button:hover { background-color: darkblue; }
+        .signup-btn { background-color: green; margin-top: 10px; }
+        .signup-btn:hover { background-color: darkgreen; }
     </style>
 </head>
 <body>
@@ -16,14 +19,17 @@
         <h2>Login Here</h2>
         <input type="text" id="username" placeholder="Username">
         <input type="password" id="password" placeholder="Password">
+        <br><br>
+        
         <button onclick="checkLogin()">Login</button>
+
+        <p id="error-msg" style="color:red; display:none; margin-top: 10px;">യൂസർനെയിം അല്ലെങ്കിൽ പാസ്‌വേഡ് തെറ്റാണ്!</p>
+
+        <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
         
-        <p id="error-msg" style="color:red; display:none;">യൂസർനെയിം അല്ലെങ്കിൽ പാസ്‌വേഡ് തെറ്റാണ്!</p>
-        
-        <hr>
         <p>അക്കൗണ്ട് ഇല്ലേ?</p>
-        <button style="background-color: green;" onclick="window.open('https://forms.gle/AjaVxLgBDJGeQGKT6', '_blank')"
-')">Sign Up</button>
+        
+        <button class="signup-btn" onclick="window.open('https://forms.gle/AjaVxLgBDJGeQGKT6', '_blank')">Sign Up</button>
     </div>
 
     <script>
@@ -31,15 +37,14 @@
             var user = document.getElementById("username").value;
             var pass = document.getElementById("password").value;
 
-            // ഇവിടെയാണ് യൂസർനെയിമും പാസ്‌വേഡും സെറ്റ് ചെയ്യുന്നത്
-            if (user === "admin" && pass === "12345") {
-    // സെഷൻ തുടങ്ങുന്നു
-    sessionStorage.setItem("loggedin", "true"); 
-    alert("Login വിജയിച്ചു!");
-    window.location.href = "home.html";
-            }
-            // ശരിയാണെങ്കിൽ home.html ലേക്ക് പോകും
+            // ഇവിടെ അഡ്മിനെയും പുതിയ യൂസറെയും (raz) പരിശോധിക്കുന്നു
+            if ((user === "admin" && pass === "12345") || (user === "raz" && pass === "555")) {
+                // സെഷൻ തുടങ്ങുന്നു
+                sessionStorage.setItem("loggedin", "true"); 
+                alert("Login വിജയിച്ചു!");
+                window.location.href = "home.html";
             } else {
+                // തെറ്റാണെങ്കിൽ ഈ ഭാഗം പ്രവർത്തിക്കും
                 document.getElementById("error-msg").style.display = "block";
             }
         }
