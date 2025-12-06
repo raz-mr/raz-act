@@ -13,26 +13,70 @@
         button { width: 100%; padding: 12px; background-color: #27ae60; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: bold; margin-top: 10px; }
         button:hover { background-color: #219150; }
         .back-link { display: block; margin-top: 20px; color: #666; text-decoration: none; font-size: 14px; }
-        .back-link:hover { color: #333; }
     </style>
 </head>
 <body>
 
     <div class="signup-box">
-        <h2>Signup New Account</h2>
-        <p style="color:#666; font-size:14px;">Fill Your Account Deatails .</p>
+        <h2>Create Account</h2>
+        <p style="color:#666; font-size:14px;">Enter details to register automatically.</p>
         
-        <form action="https://formspree.io/f/xeoyzppv" method="POST">
-            
-            <input type="text" name="username" placeholder="Username" required>
-            <input type="text" name="password" placeholder="Password" required>
-            <input type="email" name="email" placeholder="Your Email" required>
-            
-            <button type="submit">Signup</button>
-        </form>
+        <input type="email" id="email" placeholder="Email Address" required>
+        <input type="password" id="password" placeholder="Choose Password (min 6 chars)" required>
+        
+        <button onclick="registerUser()">Register Now</button>
+        <p id="msg" style="color:red; display:none; margin-top:10px;"></p>
 
         <a href="index.html" class="back-link">← Back to Login</a>
     </div>
+
+    <script type="module">
+        // ഫയർബേസ് കണക്ട് ചെയ്യുന്നു
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        // നിങ്ങളുടെ കോഡ് ഇവിടെ ചേർക്കുന്നു
+        const firebaseConfig = {
+            apiKey: "AIzaSyBTfD4BXwMaWGmgk8QMBmQWvBA_u1DABls",
+            authDomain: "raz-login-system.firebaseapp.com",
+            projectId: "raz-login-system",
+            storageBucket: "raz-login-system.firebasestorage.app",
+            messagingSenderId: "668489857312",
+            appId: "1:668489857312:web:84540d7d79bf22e79dbf45",
+            measurementId: "G-LC68Q5R1HZ"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // രജിസ്ട്രേഷൻ ഫംഗ്‌ഷൻ
+        window.registerUser = function() {
+            const email = document.getElementById("email").value;
+            const pass = document.getElementById("password").value;
+            const msg = document.getElementById("msg");
+
+            if(pass.length < 6) {
+                msg.style.display = "block";
+                msg.innerText = "പാസ്‌വേഡിൽ കുറഞ്ഞത് 6 അക്ഷരങ്ങൾ വേണം!";
+                return;
+            }
+
+            createUserWithEmailAndPassword(auth, email, pass)
+            .then((userCredential) => {
+                alert("അക്കൗണ്ട് വിജയകരമായി ക്രിയേറ്റ് ചെയ്തു! ഇനി ലോഗിൻ ചെയ്യാം.");
+                window.location.href = "index.html";
+            })
+            .catch((error) => {
+                msg.style.display = "block";
+                // എറർ മെസ്സേജ് ലളിതമാക്കുന്നു
+                if(error.code === "auth/email-already-in-use") {
+                    msg.innerText = "ഈ ഇമെയിൽ നേരത്തെ രജിസ്റ്റർ ചെയ്തിട്ടുണ്ട്.";
+                } else {
+                    msg.innerText = "എറർ: " + error.message;
+                }
+            });
+        }
+    </script>
 
 </body>
 </html>
